@@ -45,14 +45,14 @@ const Login = () => {
         <div className="login-container">
         <form onSubmit={(e) => e.preventDefault()}>
         <div className='login-inputs'>
-        <TextField sx={{ m: 1, width: '90%' }} id="outlined-search" label="Email" type="search" />
+        <TextField sx={{ m: 1, width: '90%' }} id="outlined-search" label="Email" type="search" value={login.email} onChange={handleChange('email')} />
         <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
           <OutlinedInput id="outlined-adornment-password" type={login.showPassword ? 'text' : 'password'} value={login.password} onChange={handleChange('password')} endAdornment={<InputAdornment position="end"><IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge="end"> {login.showPassword ? <VisibilityOff /> : <Visibility />}</IconButton></InputAdornment>} label="Password" />
         </FormControl>
         </div>
         <div className='login-create-forgot'>
-        <Link id="signup" to="/signup">Create Account</Link>
+        <Link id="signup" to="/register">Create Account</Link>
         <p>Forgot Password?</p>
         </div>
         <div className='login-signin-btns'>

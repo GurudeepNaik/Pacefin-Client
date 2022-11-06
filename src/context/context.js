@@ -9,14 +9,8 @@ const APIContext = createContext();
 export function APIContextProvider({ children }) {
   const herokuURL = "http://localhost:7000/api";
   const navigate = useNavigate();
-//   const [userAuth, setUserAuth] = useState({
-//     username: "",
-//     email: "",
-//     password: "",
-//   });
 
-  //post user
-  const signUpUser = (userData) => {
+  const register = (userData) => {
     console.log(userData);
     try {
       axios
@@ -99,7 +93,7 @@ export function APIContextProvider({ children }) {
       });
   };
 
-  return (<APIContext.Provider value={{ signUpUser, loginUser ,signInWithGoogle ,signInWithGitHub}}> {children} </APIContext.Provider>);
+  return (<APIContext.Provider value={{ register, loginUser ,signInWithGoogle ,signInWithGitHub}}> {children} </APIContext.Provider>);
 }
 
 export function useAPI() {
