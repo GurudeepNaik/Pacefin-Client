@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import { useAPI } from "../context/context";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const pages = ["Apple", "Tesla", "Us", "Top Headlines"];
 const settings = ["Logout"];
@@ -177,78 +178,93 @@ const Blogs = () => {
           </Toolbar>
         </Container>
       </AppBar>
-      <section class="blogs">
-        <div class="section-title">
+      <section className="blogs">
+        <div className="section-title">
           <h2>Featured Article</h2>
         </div>
-        <div class="blog-center">
+        <div className="blog-center">
           <div className="blog-row-1">
             <div className="blog-row-1-column-1">
               {news.length > 0 ? (
-                <article class="blog">
+                <article className="blog blog-row-1-column-1-container">
                   <img
                     src={news[0].urlToImage}
                     alt="coffee"
-                    class="img blog-img"
+                    className="img blog-img blog-row-1-column-1-img"
                   />
-                  <div class="blog-content">
-                    <span class="span">{news[0].author}</span>
+                  <div className="blog-content blog-row-1-column-1-text-container">
+                    <span className="span">{news[0].author}</span>
                     <h3>{news[0].title}</h3>
                     <p>{news[0].description}</p>
                     <a href={news[0].url}>Read More</a>
                   </div>
                 </article>
               ) : (
-                <div>...Loading</div>
+                <div>
+                  <CircularProgress disableShrink />
+                </div>
               )}
             </div>
             <div className="blog-row-1-column-2">
               {news.length > 0 ? (
                 row1news.map((each, i) => {
                   return (
-                    <article class="blog" key={i}>
+                    <article className="blog row-1-column-2-container" key={i}>
                       <img
                         src={each.urlToImage}
                         alt="coffee"
-                        class="img blog-img"
+                        className="img blog-img row-1-column-2-img"
                       />
-                      <div class="blog-content">
-                        <span class="span">{each.author}</span>
+                      <div className="blog-content row-1-column-2-content">
+                        <span className="span">{each.author}</span>
                         <h3>{each.title}</h3>
-                        <p>{each.description}</p>
                         <a href={each.url}>Read More</a>
                       </div>
                     </article>
                   );
                 })
               ) : (
-                <div>...Loading</div>
+                <div>
+                  <CircularProgress disableShrink />
+                </div>
               )}
             </div>
           </div>
           <div className="blog-row-2">
             <h2>Article</h2>
-            {news.length > 0 ? (
-              row2news.map((each, i) => {
-                return (
-                  <article class="blog" key={i}>
-                    <img
-                      src={each.urlToImage}
-                      alt="coffee"
-                      class="img blog-img"
-                    />
-                    <div class="blog-content">
-                      <span class="span">{each.author}</span>
-                      <h3>{each.title}</h3>
-                      <p>{each.description}</p>
-                      <a href={each.url}>Read More</a>
-                    </div>
-                  </article>
-                );
-              })
-            ) : (
-              <div>...Loading</div>
-            )}
+            <div className="blog-row-2-card-container">
+              {news.length > 0 ? (
+                row2news.map((each, i) => {
+                  if (
+                    each.urlToImage !== null &&
+                    each.author !== null &&
+                    each.title !== null &&
+                    each.description !== null &&
+                    each.url !== null
+                  ) {
+                    return (
+                      <article className="blog" key={i}>
+                        <img
+                          src={each.urlToImage}
+                          alt="coffee"
+                          className="img blog-img"
+                        />
+                        <div className="blog-content">
+                          <span className="span">{each.author}</span>
+                          <h3>{`${each.title.substring(0, 50)}...`}</h3>
+                          <p>{`${each.description.substring(0, 100)}...`}</p>
+                          <a href={each.url}>Read More</a>
+                        </div>
+                      </article>
+                    );
+                  }
+                })
+              ) : (
+                <div>
+                  <CircularProgress disableShrink />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>

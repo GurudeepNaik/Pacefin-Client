@@ -49,32 +49,31 @@ export function APIContextProvider({ children }) {
       .catch((err) => console.log(err));
   };
 
-  const getNews = async (name) => {
+  const getNews = async (name = "everything") => {
     let url;
     if (name === "Apple") {
       url =
         "https://newsapi.org/v2/everything?q=apple&from=2022-11-05&to=2022-11-05&sortBy=popularity&apiKey=6f5d1be9083649d18dfcddf7acc37da0";
-    } else if ((name === "Tesla")) {
+    } else if (name === "Tesla") {
       url =
         "https://newsapi.org/v2/everything?q=tesla&from=2022-10-06&sortBy=publishedAt&apiKey=6f5d1be9083649d18dfcddf7acc37da0";
-    } else if ((name === "Us")) {
+    } else if (name === "Us") {
       url =
         "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=6f5d1be9083649d18dfcddf7acc37da0";
-    } else if ((name === "Top Headlines")) {
+    } else if (name === "Top Headlines") {
       url =
         "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=6f5d1be9083649d18dfcddf7acc37da0";
     } else {
       url =
         "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=6f5d1be9083649d18dfcddf7acc37da0";
     }
-    console.log(url);
-   await axios.get(url).then(res=>{
+    await axios.get(url).then((res) => {
       setNews(res.data.articles);
     });
   };
-  useEffect(()=>{
-    // getNews();
-  })
+  useEffect(() => {
+    getNews();
+  }, []);
 
   const firebaseConfig = {
     apiKey: "AIzaSyDwQgybD0-khzuU6hn5snKM6Dhw9NrDacI",
@@ -95,6 +94,7 @@ export function APIContextProvider({ children }) {
     signInWithPopup(auth, provider)
       .then((value) => {
         console.log(value);
+        localStorage.setItem("image", value.user.photoURL);
         const obj = {
           username: value.user.displayName,
           email: value.user.email,
@@ -110,6 +110,7 @@ export function APIContextProvider({ children }) {
   const signInWithGitHub = () => {
     signInWithPopup(auth, gitprovider)
       .then((value) => {
+        localStorage.setItem("image", value.user.photoURL);
         console.log(value);
         if (value.user.email === null) {
           value.user.email = value.user.displayName + "@gmail.com";
@@ -128,7 +129,14 @@ export function APIContextProvider({ children }) {
 
   return (
     <APIContext.Provider
-      value={{ register, loginUser, signInWithGoogle, signInWithGitHub, news , getNews}}
+      value={{
+        register,
+        loginUser,
+        signInWithGoogle,
+        signInWithGitHub,
+        news,
+        getNews,
+      }}
     >
       {children}
     </APIContext.Provider>
